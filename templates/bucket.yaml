@@ -1,0 +1,30 @@
+{{- range $index, $bucket := .Values.buckets}}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{$bucket.name}}
+  namespace: default
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/azaurus1/gitops-crossplane-example
+      revision: HEAD
+      files:
+      - path: buckets/{{$bucket.name}}/bucket.yaml
+  template:
+    metadata:
+      name: '{{`{{path.basename}}`}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/azaurus1/gitops-crossplane-example
+        targetRevision: HEAD
+        path: '{{`{{path}}`}}'
+      destination:
+        name: in-cluster
+        namespace: default #'{{`{{path.basename}}`}}'
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+{{- end }}
