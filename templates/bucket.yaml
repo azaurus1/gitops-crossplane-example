@@ -1,30 +1,19 @@
 {{- range $index, $bucket := .Values.buckets}}
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
-  name: {{$bucket.name}}
-  namespace: default
+  name: my-app
+  namespace: argocd
 spec:
-  generators:
-  - git:
-      repoURL: https://github.com/azaurus1/gitops-crossplane-example
-      revision: HEAD
-      files:
-      - path: buckets/{{$bucket.name}}/bucket.yaml
-  template:
-    metadata:
-      name: '{{`{{path.basename}}`}}'
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/azaurus1/gitops-crossplane-example
-        targetRevision: HEAD
-        path: '{{`{{path}}`}}'
-      destination:
-        name: in-cluster
-        namespace: default #'{{`{{path.basename}}`}}'
-      syncPolicy:
-        syncOptions:
-        - CreateNamespace=true
+  project: default
+  source:
+    repoURL: https://github.com/azaurus1/gitops-crossplane-example
+    targetRevision: HEAD
+    path: buckets/{{$bucket.name}}/bucket.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated: {}
 {{- end }}
