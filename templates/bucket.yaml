@@ -1,7 +1,7 @@
 {{- range $index, $bucket := .Values.buckets}}
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
   name: {{$bucket.name}}
   namespace: default
