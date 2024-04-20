@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-example
+spec:
+  destination:
+    name: ''
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: infrastructure
+    repoURL: 'https://github.com/azaurus1/gitops-crossplane-example'
+    targetRevision: HEAD
+    directory:
+      recurse: true
+  sources: []
+  project: default
