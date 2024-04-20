@@ -1,16 +1,16 @@
-{{- range $index, $bucket := .Values.buckets}}
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: {{ $bucket.name }}
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/azaurus1/gitops-crossplane-example
-    targetRevision: HEAD
-    path: buckets/{{$bucket.name}}/bucket.yaml
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: default
-{{- end }}
+# {{- range $index, $bucket := .Values.buckets}}
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: {{ $bucket.name }}
+# spec:
+#   project: default
+#   source:
+#     repoURL: https://github.com/azaurus1/gitops-crossplane-example
+#     targetRevision: HEAD
+#     path: buckets/{{$bucket.name}}/bucket.yaml
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: default
+# {{- end }}
