@@ -7,3 +7,4 @@ spec:
     region: ap-southeast-2
   providerConfigRef:
     name: default
+  deletionPolicy: Delete
